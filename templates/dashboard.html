@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔨 Hammer Automation - Command Center</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%);
+            color: #00ff41;
+            overflow-x: hidden;
+        }
+        header {
+            background: rgba(10, 14, 39, 0.9);
+            border-bottom: 2px solid #00ff41;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 255, 65, 0.3);
+        }
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 20px #00ff41;
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #00ff41; }
+            50% { text-shadow: 0 0 40px #00ff41, 0 0 60px #00ff41; }
+        }
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: rgba(26, 31, 58, 0.8);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 255, 65, 0.4);
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00ff41;
+        }
+        .feature-section {
+            background: rgba(26, 31, 58, 0.8);
+            border: 2px solid #00ff41;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .feature-title {
+            font-size: 1.8em;
+            color: #00ff41;
+            margin-bottom: 20px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .action-card {
+            background: rgba(15, 20, 35, 0.9);
+            border: 1px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .action-button {
+            background: linear-gradient(135deg, #00ff41 0%, #7fff00 100%);
+            color: #0a0e27;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+        .quick-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .quick-link {
+            background: rgba(26, 31, 58, 0.8);
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+        }
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(26, 31, 58, 0.9);
+            border: 2px solid #00ff41;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop><source src="/static/background_music.mp3" type="audio/mpeg"></audio>
+    <header><h1>🔨 HAMMER AUTOMATION</h1></header>
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card"><div>ACTIVE SESSIONS</div><div class="stat-value" id="activeSessions">0</div></div>
+            <div class="stat-card"><div>TOTAL REQUESTS</div><div class="stat-value" id="totalRequests">0</div></div>
+            <div class="stat-card"><div>PROXY STATUS</div><div class="stat-value" id="proxyStatus">🔵 OFFLINE</div></div>
+            <div class="stat-card"><div>UPTIME</div><div class="stat-value" id="uptime">00:00:00</div></div>
+        </div>
+        <div class="feature-section">
+            <h2 class="feature-title">🛡️ Scrapling - Cloudflare Bypass</h2>
+            <div class="feature-grid">
+                <div class="action-card"><div>StealthyFetcher</div><button class="action-button" onclick="window.open('/docs#scrapling')">Test Stealthy</button></div>
+                <div class="action-card"><div>DynamicFetcher</div><button class="action-button" onclick="window.open('/docs#scrapling')">Test Dynamic</button></div>
+                <div class="action-card"><div>Configuration</div><button class="action-button" onclick="window.open('/docs')">Configure</button></div>
+            </div>
+        </div>
+        <div class="feature-section">
+            <h2 class="feature-title">🎭 Playwright Automation</h2>
+            <div class="feature-grid">
+                <div class="action-card"><div>Create Session</div><button class="action-button" onclick="window.open('/docs#session')">Create</button></div>
+                <div class="action-card"><div>Navigate</div><button class="action-button" onclick="window.open('/docs#navigate')">Navigate</button></div>
+                <div class="action-card"><div>Screenshot</div><button class="action-button" onclick="window.open('/docs#screenshot')">Screenshot</button></div>
+            </div>
+        </div>
+        <div class="feature-section">
+            <h2 class="feature-title">🛡️ MITM Proxy Control</h2>
+            <div class="feature-grid">
+                <div class="action-card"><div>Start Proxy</div><button class="action-button" onclick="fetch('/proxy/start',{method:'POST'})">Start</button></div>
+                <div class="action-card"><div>Stop Proxy</div><button class="action-button" onclick="fetch('/proxy/stop',{method:'POST'})">Stop</button></div>
+                <div class="action-card"><div>View Traffic</div><button class="action-button" onclick="window.open('/proxy/requests')">View</button></div>
+            </div>
+        </div>
+        <div class="feature-section">
+            <h2 class="feature-title">📱 Telegram Bot Control</h2>
+            <div class="feature-grid">
+                <div class="action-card"><div>Start Bot</div><button class="action-button" onclick="window.open('/docs#telegram')">Start</button></div>
+                <div class="action-card"><div>Bot Status</div><button class="action-button" onclick="window.open('/docs#telegram')">Status</button></div>
+                <div class="action-card"><div>Send Message</div><button class="action-button" onclick="window.open('/docs#telegram')">Send</button></div>
+            </div>
+        </div>
+        <div class="quick-links">
+            <a href="/docs" class="quick-link">📚 API Docs</a>
+            <a href="/stats" class="quick-link">📊 Stats</a>
+            <a href="/sessions" class="quick-link">🎯 Sessions</a>
+        </div>
+    </div>
+    <div class="music-control" onclick="toggleMusic()"><span id="musicIcon">🎵</span></div>
+    <script>
+        const music = document.getElementById('bgMusic');
+        music.volume = 0.3;
+        document.addEventListener('DOMContentLoaded', () => music.play().catch(e => console.log('Autoplay prevented')));
+        document.addEventListener('click', () => { if (music.paused) music.play(); }, { once: true });
+        function toggleMusic() {
+            const icon = document.getElementById('musicIcon');
+            if (music.paused) { music.play(); icon.textContent = '🎵'; }
+            else { music.pause(); icon.textContent = '🔇'; }
+        }
+        async function updateStats() {
+            try {
+                const r = await fetch('/stats');
+                const d = await r.json();
+                document.getElementById('activeSessions').textContent = d.active_sessions || 0;
+                document.getElementById('totalRequests').textContent = d.total_requests || 0;
+                document.getElementById('proxyStatus').textContent = d.proxy_running ? '🟢 ONLINE' : '🔵 OFFLINE';
+            } catch (e) {}
+        }
+        setInterval(updateStats, 5000);
+        updateStats();
+        let startTime = Date.now();
+        setInterval(() => {
+            const e = Date.now() - startTime;
+            const h = Math.floor(e / 3600000);
+            const m = Math.floor((e % 3600000) / 60000);
+            const s = Math.floor((e % 60000) / 1000);
+            document.getElementById('uptime').textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }, 1000);
+    </script>
+</body>
+</html>
